@@ -1,0 +1,23 @@
+# This Cloud Build configuration builds and pushes Docker images for three applications.
+
+steps:
+# Build and push application-services (Node.js)
+- name: 'gcr.io/cloud-builders/docker'
+  args: ['build', '-t', 'gcr.io/project-272c4cdf-a525-43cc-be2/application-services:latest', './application-services']
+  id: Build application-services
+
+# Build and push order-service (Java)
+- name: 'gcr.io/cloud-builders/docker'
+  args: ['build', '-t', 'gcr.io/project-272c4cdf-a525-43cc-be2/order-service:latest', './order-service']
+  id: Build order-service
+
+# Build and push patient-service (Node.js)
+- name: 'gcr.io/cloud-builders/docker'
+  args: ['build', '-t', 'gcr.io/project-272c4cdf-a525-43cc-be2/patient-service:latest', './patient-service']
+  id: Build patient-service
+
+# Specify the images to push to Container Registry
+images:
+- 'gcr.io/project-272c4cdf-a525-43cc-be2/application-services:latest'
+- 'gcr.io/project-272c4cdf-a525-43cc-be2/order-service:latest'
+- 'gcr.io/project-272c4cdf-a525-43cc-be2/patient-service:latest'
